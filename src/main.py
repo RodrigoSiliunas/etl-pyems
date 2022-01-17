@@ -1,4 +1,4 @@
-from time import sleep
+from time import sleep, time
 from bs4 import BeautifulSoup
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
@@ -9,8 +9,10 @@ class LinkFinder:
         self.sleep_time = sleep_time
         self.options = options
         self.driver = Firefox()
+        self.__site_informations = None
 
-    def _get_target_informations(self):
+    def get_target_informations(self):
+        start = time()
         number_of_poems = 0
         #  Caso for necessário setar as opções;
         if self.options:
@@ -24,22 +26,32 @@ class LinkFinder:
         self.driver.get('https://www.escritas.org/pt/poemas')
         sleep(self.sleep_time)
 
-        while True:
-            # Instanciando a página e buscando pelos poemas;
-            content = BeautifulSoup(self.driver.page_source, 'html.parser')
-            father = content.find('div', {'id': 'htmlDiv'})
+        try:
+            while True:
+                # Instanciando a página e buscando pelos poemas;
+                content = BeautifulSoup(self.driver.page_source, 'html.parser')
+                father = content.find('div', {'id': 'htmlDiv'})
 
-            # # Altera o número de poemas recebidos;
-            number_of_poems = len(father)
+                # # Altera o número de poemas recebidos;
+                number_of_poems = len(father)
 
-            if (len(father) != number_of_poems) and (number_of_poems != 20):
-                return print(father.prettify())
+                if (len(father) != number_of_poems) and (number_of_poems != 20):
+                    self.__site_informations = father
+                    print(
+                        f'😎✌ Sucesso! O script coletou todos os dados do site.\nVocê consegiu informações sobre um total de {number_of_poems} publicações nesse site.')
+                    break
 
-            button = self.driver.find_elements_by_tag_name('button')[-1]
-            button.click()
-            sleep(self.sleep_time / 2)
+                button = self.driver.find_elements_by_tag_name('button')[-1]
+                button.click()
+                sleep(self.sleep_time / 2)
+        except:
+            print(
+                f'😢👎 Algo não saiu como planejado. O script se encerrou de forma precoce.\nVocê conseguiu informações sobre um total de {number_of_poems} poemas.')
+        finally:
+            print(
+                f'🚀 O tempo total de execução da função foi de {(time() - start):.2f} segundos.')
 
 
 if __name__ == '__main__':
     finder = LinkFinder(3)
-    finder._get_target_informations()
+    finder.get_target_informations()
