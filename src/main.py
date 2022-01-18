@@ -1,3 +1,4 @@
+import pandas as pd
 from time import sleep, time
 from bs4 import BeautifulSoup
 from selenium.webdriver import Firefox
@@ -11,7 +12,7 @@ class LinkFinder:
         self._driver = Firefox()
         self._site_informations = None
 
-    def _get_target_informations(self):
+    def get_target_informations(self):
         start = time()
         number_of_poems = 0
 
@@ -19,7 +20,7 @@ class LinkFinder:
         if self._options:
             options = Options()
 
-            for option in self.options:
+            for option in self._options:
                 options.add_argument(option)
 
             self._driver = Firefox(options=options)
@@ -30,14 +31,16 @@ class LinkFinder:
         try:
             while True:
                 # Instanciando a página e buscando pelos poemas;
-                content = BeautifulSoup(self._driver.page_source, 'html.parser')
+                content = BeautifulSoup(
+                    self._driver.page_source, 'html.parser')
                 father = content.find('div', {'id': 'htmlDiv'})
 
                 # # Altera o número de poemas recebidos;
                 number_of_poems = len(father)
 
-                if (len(father) != number_of_poems) and (number_of_poems != 20):
-                    self.site_informations = father
+                # if (len(father) == number_of_poems) and (number_of_poems != 20):
+                if (number_of_poems == 20):
+                    self._site_informations = father
                     print(
                         f'😎✌ Sucesso! O script coletou todos os dados do site.\nVocê consegiu informações sobre um total de {number_of_poems} publicações nesse site.')
                     break
@@ -46,7 +49,7 @@ class LinkFinder:
                 button.click()
                 sleep(self.sleep_time / 2)
         except:
-            self.site_informations = father
+            self._site_informations = father
             print(
                 f'😢👎 Algo não saiu como planejado. O script se encerrou de forma precoce. Você conseguiu informações sobre um total de {number_of_poems} poemas.')
         finally:
@@ -55,7 +58,30 @@ class LinkFinder:
             return self._site_informations
 
 
+class PoemExtractor:
+    def __init__(self, links):
+        self._links = links
+
+    def get_poems(self):
+        poems = self._links.findAll(
+            'div', attrs={'class': 'card border-0 shadow h-100 text-center'})
+
+        for poem in poems:
+            title = poem.find('h5', attrs={'class': 'card-title impact mb-3'})
+            author = poem.find('a', attrs={'class': 'card-header'})
+            content = poem.find('div', attrs={'class': 'card-text collapse'})
+
+            print(
+                f'Poema encontrado!\nTítulo: {title.text}\nAutor: {author.text}\nPoema: {content.text}\n')
+
+
+class FileCreator:
+    def __init__(self):
+        pass
+
+
 if __name__ == '__main__':
-    finder = LinkFinder(2, ['--headless'])
-    finder._get_target_informations()
-    print(finder.site_informations.prettify())
+    linkFinder = LinkFinder(2)
+    poemExtractor = PoemExtractor(linkFinder.get_target_informations())
+
+    poemExtractor.get_poems()
