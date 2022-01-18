@@ -13,7 +13,23 @@ O projeto utiliza várias tecnologias por de baixo dos panos, eu listarei **apen
 > 5. *MongoDB*
 
 
-### Fluxo do Projeto
+### Rodando o Projeto
+O código principal fica em `src/main.py`. Antes de executar o código você deve se certificar que tem o *Python* em sua **versão minima** 3.10.1 instalada em sua máquina. Você também deverá ter o MongoDB instalado em sua máquina.
+
+Se estiver cumprindo os requisitos basta abrir o *terminal/powershell* na pasta raiz do projeto e ativar a venv com o comando:
+
+    enviroment/Scripts/activate
+
+As bibliotecas seram carregadas e você pode simplesmente executar o comando:
+
+    python src/main.py
+
+A mágica toda vai acontecer, você só precisa aguardar enquanto as informações são extraidas do site e carregadas em seu MongoDB. 😎
+
+🚧 Atenção!!! 🚧
+
+O módulo ***LinkFinder*** possui apenas um parâmetro **obrigatório**. Ele é o inteiro que representa quanto tempo você deseja aguardar até que a página seja carregada completamente. Single Page Aplications tem o seu HTML renderizado pouco tempo após o cliente fazer a requisição, por isso ele é necessário para que tudo funcione corretamente. Se a sua conexão com a internet e o seu computador forem de alta performance você pode reduzir o tempo, caso contrário você pode aumentar o tempo para que tudo ocorra sem problemas.
+
 ### Considerações Finais
 Esse foi um projeto muito divertido de ser feito, do inicio ao fim eu estive completamente focado e o entretenimento e satisfação pessoal foi tanta que acabou se passando o tempo sem que eu sequer notasse.
 
