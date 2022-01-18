@@ -1,10 +1,3 @@
-# import os
-# import pandas as pd
-# from time import sleep, time
-# from bs4 import BeautifulSoup
-# from selenium.webdriver import Firefox
-# from selenium.webdriver.firefox.options import Options
-
 from packages.linkfinder import *
 from packages.filemanager import *
 from packages.poemextractor import *

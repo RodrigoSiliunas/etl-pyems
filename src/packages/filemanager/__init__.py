@@ -15,4 +15,4 @@ class FileManager:
         print(f'🚀 Arquivo CSV gerado com sucesso na pasta out!')
         data = pd.DataFrame(data=self._dict_data)
 
-        return data.to_csv(path, encoding='utf-8-sig')
+        return data.to_csv(path, encoding='utf-8-sig', index=False)
