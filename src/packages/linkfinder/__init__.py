@@ -38,7 +38,7 @@ class LinkFinder:
                 number_of_poems = len(father)
 
                 # if (len(father) == number_of_poems) and (number_of_poems != 20):
-                if (number_of_poems == 20):
+                if (number_of_poems >= 80):
                     self._site_informations = father
                     print(
                         f'😎✌ Sucesso! O script coletou todos os dados do site.\nVocê consegiu informações sobre um total de {number_of_poems} publicações nesse site.')
