@@ -9,11 +9,12 @@ class LinkFinder:
         self.sleep_time = sleep_time
         self.options = options
         self.driver = Firefox()
-        self.__site_informations = None
+        self._site_informations = None
 
-    def get_target_informations(self):
+    def _get_target_informations(self):
         start = time()
         number_of_poems = 0
+
         #  Caso for necessário setar as opções;
         if self.options:
             options = Options()
@@ -36,7 +37,7 @@ class LinkFinder:
                 number_of_poems = len(father)
 
                 if (len(father) != number_of_poems) and (number_of_poems != 20):
-                    self.__site_informations = father
+                    self.site_informations = father
                     print(
                         f'😎✌ Sucesso! O script coletou todos os dados do site.\nVocê consegiu informações sobre um total de {number_of_poems} publicações nesse site.')
                     break
@@ -45,13 +46,15 @@ class LinkFinder:
                 button.click()
                 sleep(self.sleep_time / 2)
         except:
+            self.site_informations = father
             print(
-                f'😢👎 Algo não saiu como planejado. O script se encerrou de forma precoce.\nVocê conseguiu informações sobre um total de {number_of_poems} poemas.')
+                f'😢👎 Algo não saiu como planejado. O script se encerrou de forma precoce. Você conseguiu informações sobre um total de {number_of_poems} poemas.')
         finally:
             print(
-                f'🚀 O tempo total de execução da função foi de {(time() - start):.2f} segundos.')
+                f'\n🚀 O tempo total de execução do algoritimo para obtenção dos links foi de {(time() - start):.2f} segundos.')
 
 
 if __name__ == '__main__':
-    finder = LinkFinder(3)
-    finder.get_target_informations()
+    finder = LinkFinder(2, ['--headless'])
+    finder._get_target_informations()
+    print(finder.site_informations.prettify())
