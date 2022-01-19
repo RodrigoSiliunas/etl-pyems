@@ -1,4 +1,4 @@
-# Extract Transform Load
+# Pyems
 
 ### Sobre o Projeto
 O projeto tem como sua finalidade principal extrair dados do site [https://www.escritas.org/pt](https://www.escritas.org/pt/poemas) de forma automatizada, tratar esses dados e inseri-los como documentos no banco de dados não relacional *MongoDB*. A posteriori o repositório [Beautiful Pyems](https://github.com/RodrigoSiliunas/beautiful-pyems) consumirá os documentos armazenados e retornará esses dados de diferentes maneiras em formato de API *Flask*.
