@@ -25,7 +25,11 @@ As bibliotecas seram carregadas e você pode simplesmente executar o comando:
     python src/main.py
 
 A mágica toda vai acontecer, você só precisa aguardar enquanto as informações são extraidas do site e carregadas em seu MongoDB. 😎
-<br>
+<br/>
+
+### Fluxo do Sistema
+![Fluxo do sistema em imagem](/out/fluxo.png)
+
 ### Observações Importantes ⚠️
 
 O módulo ***LinkFinder*** possui apenas um parâmetro **obrigatório**. Ele é o inteiro que representa quanto tempo você deseja aguardar até que a página seja carregada completamente. Single Page Aplications tem o seu HTML renderizado pouco tempo após o cliente fazer a requisição, por isso ele é necessário para que tudo funcione corretamente. Se a sua conexão com a internet e o seu computador forem de alta performance você pode reduzir o tempo, caso contrário você pode aumentar o tempo para que tudo ocorra sem problemas.
